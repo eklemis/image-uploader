@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function Home() {
 	// 0: start screen, 1: uploading screen, 2: result screen
-	const [activeScreen, setActiveScreen] = useState(0);
+	const [activeScreen, setActiveScreen] = useState(1);
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -24,7 +24,7 @@ export default function Home() {
 							<figure className={styles.figure}>
 								<Image
 									src="/add_to_photos_black_24dp.svg"
-									alt="Trulli"
+									alt="Drag & Drop your image here"
 									width={114}
 									height={89}
 								/>
@@ -34,7 +34,26 @@ export default function Home() {
 							</figure>
 						</div>
 						<p className={styles["ordinary-text"]}>Or</p>
-						<button className={styles.btn}>Choose file</button>
+						<input
+							type="file"
+							name="imageFile"
+							id="imageFile"
+							accept="image/*"
+							className={styles["btn__upload"]}
+						/>
+						<label htmlFor="imageFile">Choose file</label>
+					</Screen>
+				)}
+				{activeScreen === 1 && (
+					<Screen>
+						<div className={styles["progress-holder"]}>
+							<h1 className={styles.title}>Uploading...</h1>
+							<progress
+								className={styles.progress}
+								value="75"
+								max="100"
+							></progress>
+						</div>
 					</Screen>
 				)}
 			</main>

@@ -99,6 +99,37 @@
 	letter-spacing: -0.035em;
 	cursor: pointer;
 }
+.btn__upload {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.btn__upload + label {
+	background-color: #2f80ed;
+	border-radius: 8px;
+	border: none;
+	padding: 8px 16px;
+	color: white;
+	font-family: "Noto Sans", sans-serif;
+	font-size: 12px;
+	line-height: 16px;
+	text-align: center;
+	letter-spacing: -0.035em;
+	cursor: pointer;
+}
+.progress-holder {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+.progress {
+	margin-top: 32px;
+	width: 100%;
+}
 @media (max-width: 600px) {
 	.grid {
 		width: 100%;
