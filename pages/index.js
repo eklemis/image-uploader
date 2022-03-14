@@ -18,9 +18,9 @@ export default function Home() {
 			<main className={styles.main}>
 				{activeScreen === 0 && (
 					<Screen>
-						<h1>Upload your image</h1>
-						<p>File should be Jpeg, Png,...</p>
-						<div>
+						<h1 className={styles.title}>Upload your image</h1>
+						<p className={styles.label}>File should be Jpeg, Png,...</p>
+						<div className={styles["figure-holder"]}>
 							<figure className={styles.figure}>
 								<Image
 									src="/add_to_photos_black_24dp.svg"
@@ -28,11 +28,13 @@ export default function Home() {
 									width={114}
 									height={89}
 								/>
-								<figcaption>Fig.1 - Trulli, Puglia, Italy.</figcaption>
+								<figcaption className={styles["figure-caption"]}>
+									Drag & Drop your image here
+								</figcaption>
 							</figure>
 						</div>
-						<p>Or</p>
-						<button>Choose file</button>
+						<p className={styles["ordinary-text"]}>Or</p>
+						<button className={styles.btn}>Choose file</button>
 					</Screen>
 				)}
 			</main>
