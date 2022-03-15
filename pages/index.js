@@ -46,6 +46,37 @@ export default function Home() {
 			setShowMsg(false);
 		}, 1500);
 	}
+	async function dropHandler(ev) {
+		console.log("File(s) dropped");
+		ev.preventDefault();
+		if (ev.dataTransfer.items) {
+			// Use DataTransferItemList interface to access the file(s)
+			if (ev.dataTransfer.items[0].kind === "file") {
+				var file = ev.dataTransfer.items[0].getAsFile();
+				setActiveScreen(1);
+				setImageUrl(URL.createObjectURL(file));
+				const result = await uploadToServer(file);
+				console.log(result);
+				setUploadedImg(result.apiResp.display_url);
+				setActiveScreen(2);
+			}
+		} else {
+			console.log("file[0].name = " + ev.dataTransfer.files[0].name);
+			const i = ev.dataTransfer.files[0];
+			setActiveScreen(1);
+			setImageUrl(URL.createObjectURL(i));
+			const result = await uploadToServer(i);
+			console.log(result);
+			setUploadedImg(result.apiResp.display_url);
+			setActiveScreen(2);
+		}
+	}
+	function dragOverHandler(ev) {
+		console.log("File(s) in drop zone");
+
+		// Prevent default behavior (Prevent file from being opened)
+		ev.preventDefault();
+	}
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -59,7 +90,12 @@ export default function Home() {
 					<Screen>
 						<h1 className={styles.title}>Upload your image</h1>
 						<p className={styles.label}>File should be Jpeg, Png,...</p>
-						<div className={styles["figure-holder"]}>
+						<div
+							className={styles["figure-holder"]}
+							id="drop_zone"
+							onDrop={dropHandler}
+							onDragOver={dragOverHandler}
+						>
 							<figure className={styles.figure}>
 								<Image
 									src="/clip-1406.png"
