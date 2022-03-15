@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Screen from "../components/screen";
 import Progress from "../components/progress";
+import Footer from "../components/footer";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -157,6 +158,7 @@ export default function Home() {
 					</Screen>
 				)}
 			</main>
+			<Footer />
 		</div>
 	);
 }
