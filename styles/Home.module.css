@@ -126,9 +126,12 @@
 	align-items: center;
 	justify-content: center;
 	margin-top: 26px;
+	object-fit: cover;
+	position: relative;
 }
 .uploaded-image {
 	border-radius: 12px;
+	position: absolute;
 }
 .link-holder {
 	width: 100%;
@@ -144,6 +147,17 @@
 	padding: 2px;
 	margin-top: 26px;
 	padding-left: 8px;
+	position: relative;
+}
+.copied-msg {
+	position: absolute;
+	background-color: #4f4f4f;
+	color: white;
+	font-size: 10px;
+	padding: 8px 10px;
+	border-radius: 2px;
+	margin-top: 40px;
+	margin-left: -20px;
 }
 .link-holder input[type="text"] {
 	border: none;
@@ -194,6 +208,7 @@
 	letter-spacing: -0.035em;
 
 	color: #ffffff;
+	cursor: pointer;
 }
 @media (max-width: 600px) {
 	.grid {

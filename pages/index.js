@@ -3,7 +3,6 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Screen from "../components/screen";
 import { useEffect, useState } from "react";
-import { style } from "@mui/system";
 
 export default function Home() {
 	// 0: start screen, 1: uploading screen, 2: result screen
@@ -13,21 +12,23 @@ export default function Home() {
 
 	const [uploadedImg, setUploadedImg] = useState("/uploads/image-uploaded.png");
 	const [imageUrl, setImageUrl] = useState("");
+
+	const [showMsg, setShowMsg] = useState(false);
 	useEffect(() => {
-		setImageUrl(window.location.origin + uploadedImg);
+		setImageUrl(uploadedImg);
 	}, [uploadedImg]);
 
 	const uploadToClient = async (event) => {
 		if (event.target.files && event.target.files[0]) {
 			setProgress(0);
 			const i = event.target.files[0];
-			console.log(event.target.files[0]);
 			setProgress(25);
 			setActiveScreen(1);
+			setImageUrl(URL.createObjectURL(i));
 			const result = await uploadToServer(i);
 			setProgress(80);
 			console.log(result);
-			setUploadedImg(result.fileUrl);
+			setUploadedImg(result.apiResp.display_url);
 			setProgress(100);
 			setActiveScreen(2);
 		}
@@ -43,12 +44,19 @@ export default function Home() {
 		return response.json();
 	};
 
+	function copyClipboard() {
+		navigator.clipboard.writeText(imageUrl);
+		setShowMsg(true);
+		setTimeout(() => {
+			setShowMsg(false);
+		}, 1500);
+	}
 	return (
 		<div className={styles.container}>
 			<Head>
 				<title>Image Uploader</title>
 				<meta name="description" content="Image file uploader" />
-				<link rel="icon" href="/favicon.ico" />
+				<link rel="icon" href="/icon.png" />
 			</Head>
 
 			<main className={styles.main}>
@@ -106,18 +114,30 @@ export default function Home() {
 							<Image
 								src={uploadedImg}
 								alt="Uploaded image"
-								width="100%"
-								height="100%"
 								className={styles["uploaded-image"]}
+								layout="fill"
 							></Image>
 						</div>
 						<div className={styles["link-holder"]}>
+							{showMsg && (
+								<span className={styles["copied-msg"]}>Link copied!</span>
+							)}
 							<p className={styles["link-text"]}>{imageUrl}</p>
-							<button className={styles["btn__copy"]}>Copy Link</button>
+							<button className={styles["btn__copy"]} onClick={copyClipboard}>
+								Copy Link
+							</button>
 						</div>
 					</Screen>
 				)}
 			</main>
 		</div>
 	);
+}
+export async function getStaticProps() {
+	console.log(process.env);
+	return {
+		props: {
+			data: "",
+		},
+	};
 }
