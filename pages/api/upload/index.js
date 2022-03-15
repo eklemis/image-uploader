@@ -20,9 +20,11 @@ export default async function handler(req, res) {
 			console.log(fields, files);
 			console.log(files.file.filepath);
 			const oldPath = files.file.filepath;
+			console.log(`Old path: ${oldPath}`);
 			const ext = files.file.originalFilename.split(".").pop();
 			const newFileName = nanoid() + "." + ext;
 			const newPath = `./public/uploads/${newFileName}`;
+			console.log(`new path:${newPath}`);
 			const newUrl = "/uploads/" + newFileName;
 			mv(oldPath, newPath, function (err) {});
 			res.status(200).json({ message: "success", fileUrl: newUrl });
