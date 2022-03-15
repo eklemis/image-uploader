@@ -2,13 +2,12 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Screen from "../components/screen";
+import Progress from "../components/progress";
 import { useEffect, useState } from "react";
 
 export default function Home() {
 	// 0: start screen, 1: uploading screen, 2: result screen
 	const [activeScreen, setActiveScreen] = useState(0);
-
-	const [progress, setProgress] = useState(25);
 
 	const [uploadedImg, setUploadedImg] = useState("/uploads/image-uploaded.png");
 	const [imageUrl, setImageUrl] = useState("");
@@ -20,16 +19,12 @@ export default function Home() {
 
 	const uploadToClient = async (event) => {
 		if (event.target.files && event.target.files[0]) {
-			setProgress(0);
 			const i = event.target.files[0];
-			setProgress(25);
 			setActiveScreen(1);
 			setImageUrl(URL.createObjectURL(i));
 			const result = await uploadToServer(i);
-			setProgress(80);
 			console.log(result);
 			setUploadedImg(result.apiResp.display_url);
-			setProgress(100);
 			setActiveScreen(2);
 		}
 	};
@@ -93,11 +88,7 @@ export default function Home() {
 					<Screen>
 						<div className={styles["progress-holder"]}>
 							<h1 className={styles.title}>Uploading...</h1>
-							<progress
-								className={styles.progress}
-								value={progress}
-								max="100"
-							></progress>
+							<Progress />
 						</div>
 					</Screen>
 				)}

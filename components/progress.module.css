@@ -1,0 +1,27 @@
+.wrapper {
+	width: 100%;
+	height: 6px;
+	background: #f2f2f2;
+	border-radius: 8px;
+	margin-top: 32px;
+	position: relative;
+}
+.wrapper .bar {
+	position: absolute;
+	height: 100%;
+	width: 30%;
+	background: #2f80ed;
+	border-radius: 8px;
+	animation-name: proccess;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
+@keyframes proccess {
+	from {
+		margin-left: 0px;
+	}
+	to {
+		margin-left: 70%;
+	}
+}
